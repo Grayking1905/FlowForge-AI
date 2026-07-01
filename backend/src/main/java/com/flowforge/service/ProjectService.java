@@ -18,6 +18,7 @@ public class ProjectService {
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
 
+    @Transactional(readOnly = true)
     public List<ProjectDto> findAll(String category, String status) {
         List<Project> projects;
         if (category != null && !category.equalsIgnoreCase("All")) {
@@ -30,6 +31,7 @@ public class ProjectService {
         return projects.stream().map(this::toDto).toList();
     }
 
+    @Transactional(readOnly = true)
     public ProjectDto findById(Long id) {
         return projectRepository.findById(id).map(this::toDto)
             .orElseThrow(() -> new IllegalArgumentException("Project not found"));
