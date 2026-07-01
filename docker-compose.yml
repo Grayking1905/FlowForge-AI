@@ -1,0 +1,94 @@
+version: '3.8'
+
+services:
+  # --- Backend ---
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_URL: jdbc:postgresql://db:5432/flowforge
+      DB_USER: flowforge
+      DB_PASS: changeme
+      DB_DRIVER: org.postgresql.Driver
+      JPA_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CACHE_TYPE: redis
+      JWT_SECRET: flowforge-ai-super-secret-key-that-is-at-least-256-bits-long-2026
+      CORS_ORIGINS: http://localhost:3000,http://localhost:5173
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Frontend ---
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+  # --- PostgreSQL ---
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: flowforge
+      POSTGRES_USER: flowforge
+      POSTGRES_PASSWORD: changeme
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U flowforge"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # --- Redis ---
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  # --- Selenium Grid Hub ---
+  selenium-hub:
+    image: selenium/hub:4.27.0-20241204
+    ports:
+      - "4444:4444"
+      - "4443:4443"
+      - "4442:4442"
+
+  # --- Chrome Node ---
+  chrome:
+    image: selenium/node-chrome:4.27.0-20241204
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
+  # --- Firefox Node ---
+  firefox:
+    image: selenium/node-firefox:4.27.0-20241204
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
+volumes:
+  db-data:

@@ -1,0 +1,108 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: flowforge-backend
+
+  # --- Database (H2 for dev, PostgreSQL for prod) ---
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:flowforge;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL}
+    username: ${DB_USER:sa}
+    password: ${DB_PASS:}
+    driver-class-name: ${DB_DRIVER:org.h2.Driver}
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: false
+    defer-datasource-initialization: true
+
+  # --- Flyway (disabled for dev — use data.sql for seeding) ---
+  flyway:
+    enabled: false
+
+  # --- Seed data ---
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:data.sql
+
+  # --- Redis (optional, falls back to in-memory cache) ---
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  cache:
+    type: ${CACHE_TYPE:simple}
+
+  # --- Jackson ---
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
+# --- JWT ---
+app:
+  jwt:
+    secret: ${JWT_SECRET:flowforge-ai-super-secret-key-that-is-at-least-256-bits-long-2026}
+    expiration-ms: ${JWT_EXPIRATION:86400000}
+
+  # --- AI ---
+  ai:
+    provider: ${AI_PROVIDER:mock}
+    openai-api-key: ${OPENAI_API_KEY:}
+    openai-model: ${OPENAI_MODEL:gpt-4o-mini}
+
+  # --- CORS ---
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:5173,http://localhost:3000}
+
+# --- Logging ---
+logging:
+  level:
+    com.flowforge: DEBUG
+    org.springframework.web.socket: INFO
+    org.hibernate.SQL: WARN
+
+# --- Actuator ---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+---
+# Production profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/flowforge}
+    username: ${DB_USER:flowforge}
+    password: ${DB_PASS:changeme}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  h2:
+    console:
+      enabled: false
+
+  cache:
+    type: redis

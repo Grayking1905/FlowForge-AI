@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="FlowForge AI Test Suite" parallel="classes" thread-count="4">
+    <test name="UI Tests">
+        <classes>
+            <class name="com.flowforge.tests.LoginTests"/>
+            <class name="com.flowforge.tests.ProjectTests"/>
+            <class name="com.flowforge.tests.TaskTests"/>
+        </classes>
+    </test>
+</suite>

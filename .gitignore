@@ -1,0 +1,29 @@
+node_modules/
+dist/
+build/
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+.DS_Store
+*.log
+
+# Java/Spring Boot
+target/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/
+!/.mvn/wrapper/maven-wrapper.jar
+!/.mvn/wrapper/maven-wrapper.properties
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/
+
+# Ignore test.js as it's a scratchpad script
+test.js
