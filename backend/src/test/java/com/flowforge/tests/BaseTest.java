@@ -49,9 +49,9 @@ public abstract class BaseTest {
 
     @AfterMethod
     public void tearDown(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
-            captureScreenshot(result.getName());
-        }
+        // Capture screenshot for every test case run
+        captureScreenshot(result.getName());
+        
         if (driver != null) {
             driver.quit();
         }
