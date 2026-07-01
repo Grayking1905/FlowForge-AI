@@ -55,6 +55,9 @@ Additionally, the framework supports Selenium Grid execution via the `selenium.g
 
 The automated test suite executed successfully against the local environment (Vite frontend + Spring Boot backend + TestNG). Below is the terminal output from the Maven Test phase:
 
+<img width="1912" height="997" alt="Screenshot 2026-07-01 191358" src="https://github.com/user-attachments/assets/73474e6b-4060-49dd-ade5-195f830bbdc5" />
+
+
 ```text
 19:08:15.307 [TestNG-test-UI Tests-1] INFO io.github.bonigarcia.wdm.WebDriverManager -- Exporting webdriver.chrome.driver as C:\Users\shriv\.cache\selenium\chromedriver\win64\149.0.7827.155\chromedriver.exe
 ...
