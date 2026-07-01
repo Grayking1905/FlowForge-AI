@@ -42,6 +42,7 @@ export default function Login() {
           <div>
             <label className="block text-sm font-medium text-on-surface mb-2">Email</label>
             <input
+              id="login-email"
               type="email" value={email} onChange={e => setEmail(e.target.value)}
               className="w-full bg-surface-container/50 border border-outline-variant/30 text-on-surface rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all placeholder-on-surface-variant/50"
               placeholder="you@company.com"
@@ -51,6 +52,7 @@ export default function Login() {
           <div>
             <label className="block text-sm font-medium text-on-surface mb-2">Password</label>
             <input
+              id="login-password"
               type="password" value={password} onChange={e => setPassword(e.target.value)}
               className="w-full bg-surface-container/50 border border-outline-variant/30 text-on-surface rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/30 transition-all placeholder-on-surface-variant/50"
               placeholder="••••••••"
@@ -58,6 +60,7 @@ export default function Login() {
           </div>
 
           <button
+            id="login-submit"
             type="submit"
             disabled={loading}
             className="w-full py-3 rounded-lg bg-primary/20 border border-primary/30 text-primary font-semibold hover:bg-primary/30 transition-colors active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(125,211,252,0.15)]"
