@@ -41,12 +41,13 @@ services:
       - key: CORS_ORIGINS
         value: "https://flowforge-ai-frontend-17r5pc0end.vercel.app,http://localhost:3000,http://localhost:5173"
 
+  - type: redis
+    name: flowforge-redis
+    plan: free
+    ipAllowList: []
+
 databases:
   - name: flowforge-db
     databaseName: flowforge
     user: flowforge
-    plan: free
-
-redis:
-  - name: flowforge-redis
     plan: free
