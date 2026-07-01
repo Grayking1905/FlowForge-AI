@@ -1,0 +1,52 @@
+services:
+  - type: web
+    name: flowforge-backend
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DB_URL
+        fromDatabase:
+          name: flowforge-db
+          property: connectionString
+      - key: DB_USER
+        fromDatabase:
+          name: flowforge-db
+          property: user
+      - key: DB_PASS
+        fromDatabase:
+          name: flowforge-db
+          property: password
+      - key: DB_DRIVER
+        value: org.postgresql.Driver
+      - key: JPA_DIALECT
+        value: org.hibernate.dialect.PostgreSQLDialect
+      - key: REDIS_HOST
+        fromService:
+          type: redis
+          name: flowforge-redis
+          property: host
+      - key: REDIS_PORT
+        fromService:
+          type: redis
+          name: flowforge-redis
+          property: port
+      - key: CACHE_TYPE
+        value: redis
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS
+        value: "https://flowforge-ai-frontend-17r5pc0end.vercel.app,http://localhost:3000,http://localhost:5173"
+
+databases:
+  - name: flowforge-db
+    databaseName: flowforge
+    user: flowforge
+    plan: free
+
+redis:
+  - name: flowforge-redis
+    plan: free
