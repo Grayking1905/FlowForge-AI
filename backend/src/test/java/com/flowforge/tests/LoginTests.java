@@ -21,7 +21,7 @@ public class LoginTests extends BaseTest {
     public void testSuccessfulLogin() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.navigateTo(baseUrl);
-        loginPage.login("alex@flowforge.ai", "password");
+        loginPage.login("test_hash@flowforge.ai", "password");
 
         DashboardPage dashboard = new DashboardPage(driver);
         dashboard.waitForLoad();

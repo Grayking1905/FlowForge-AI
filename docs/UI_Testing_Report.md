@@ -51,5 +51,26 @@ driver = new ChromeDriver(options);
 ```
 Additionally, the framework supports Selenium Grid execution via the `selenium.grid.url` system property for distributed cross-browser testing.
 
-## 5. Conclusion
+## 5. Execution Proof
+
+The automated test suite executed successfully against the local environment (Vite frontend + Spring Boot backend + TestNG). Below is the terminal output from the Maven Test phase:
+
+```text
+19:08:15.307 [TestNG-test-UI Tests-1] INFO io.github.bonigarcia.wdm.WebDriverManager -- Exporting webdriver.chrome.driver as C:\Users\shriv\.cache\selenium\chromedriver\win64\149.0.7827.155\chromedriver.exe
+...
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 30.81 s -- in TestSuite
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  34.599 s
+[INFO] Finished at: 2026-07-01T19:08:26+05:30
+[INFO] ------------------------------------------------------------------------
+```
+
+## 6. Conclusion
 The implementation of Selenium WebDriver automated tests successfully validates the primary user journeys—specifically login mechanisms, form interactions, and dynamic React routing. The use of the Page Object Model ensures that the testing suite is robust, maintainable, and easily extensible as new features (like AI Chat integration UI tests) are added to the application.

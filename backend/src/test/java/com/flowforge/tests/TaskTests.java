@@ -20,7 +20,7 @@ public class TaskTests extends BaseTest {
     public void loginFirst() {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.navigateTo(baseUrl);
-        loginPage.login("alex@flowforge.ai", "password");
+        loginPage.login("test_hash@flowforge.ai", "password");
         new DashboardPage(driver).waitForLoad();
     }
 
